@@ -1,15 +1,14 @@
 package com.lbl.agent;
 
 import com.lbl.advice.MyAdvice;
+import com.lbl.listener.TransformListener;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.ClassFileLocator;
-import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassInjector;
 import net.bytebuddy.matcher.ElementMatchers;
-import net.bytebuddy.utility.JavaModule;
 import org.apache.skywalking.apm.toolkit.trace.RunnableWrapper;
 
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.Map;
  * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
  * @since 2021/1/4
  */
-public class SweetAgent {
+public class AfterAgent {
 
 
     public static void premain(String agentArgs, Instrumentation inst) throws IOException, UnmodifiableClassException {
@@ -42,50 +41,12 @@ public class SweetAgent {
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("net.bytebuddy."))
                 .type(target -> target.getName().equals("java.util.concurrent.ThreadPoolExecutor"))
-                .transform(new AgentBuilder.Transformer() {
-                    @Override
-                    public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader, JavaModule module) {
-                        return builder.visit(Advice.to(MyAdvice.class).on(target -> target.getName().equals("execute")));
-                    }
-                })
+                .transform((builder, typeDescription, classLoader, module) -> builder
+                        .visit(Advice.to(MyAdvice.class).on(target -> target.getName().equals("execute"))))
                 .with(RedefinitionStrategy.RETRANSFORMATION)
                 .with(RedefinitionStrategy.Listener.ErrorEscalating.FAIL_FAST)
                 .with(new TransformListener())
                 .installOn(inst);
-
-    }
-
-    private static class TransformListener implements AgentBuilder.Listener {
-
-
-        @Override
-        public void onDiscovery(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
-        }
-
-        @Override
-        public void onTransformation(final TypeDescription typeDescription,
-                                     final ClassLoader classLoader,
-                                     final JavaModule module,
-                                     final boolean loaded,
-                                     final DynamicType dynamicType) {
-            System.out.println("On Transformation class " + typeDescription.getName() + " loaded:" + loaded);
-        }
-
-        @Override
-        public void onIgnored(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
-        }
-
-        @Override
-        public void onError(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded, Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
-        @Override
-        public void onComplete(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
-        }
 
     }
 
