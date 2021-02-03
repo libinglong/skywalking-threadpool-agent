@@ -1,8 +1,8 @@
 # skywalking-threadpool-agent
 
-
-
 This project is designed to make it possible to propagate skywalking trace without changing user's code when using threadpool.
+
+If the project helps you, please star it!
 
 #### How to propagate
 
