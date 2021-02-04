@@ -6,11 +6,17 @@ If the project helps you, please star it!
 
 #### How to propagate
 
-To propagate trace between thread, we may want to enhance Runnable first. But it's not good since Runnable is not only used in thread.So advicing ThreadPoolExecutor#execute to wrap the Runnable param is a good choice.
+To propagate trace between thread, we may want to enhance Runnable first. But it's not good since Runnable is not only used in thread.So advicing ThreadPoolExecutor#execute to wrap the Runnable param is a good choice.But it's hard to do it.The java agent of skywalking usually add a field and implement interface EnhancedInstance when it enhance instances.It fails when the class of the enhanced instance has been loaded because most JVMs do not allow changes in the class file format for classes that have been loaded previously.ThreadPoolExecutor is a special class in the bootstrap class path and may be loaded at any code. Fortunately we don't need to change the layout of ThreadPoolExecutor if we just want to wrap the Runnable param. So let's write another agent to do this.
 
-The java agent of skywalking usually add a field and implement interface EnhancedInstance when it enhance instances.It fails when the class of the enhanced instance has been loaded because most JVMs do not allow changes in the class file format for classes that have been loaded previously.ThreadPoolExecutor is a special class in the bootstrap class path and may be loaded in many scene. Fortunately we don't need to change the layout of ThreadPoolExecutor if we just want to wrap the Runnable param. This agent wrap the Runnable with the org.apache.skywalking.apm.toolkit.trace.RunnableWrapper. And there is a plugin in skywalking agent enhance RunnableWrapper. Now the trace is propagated!
+> You can not enhance the intance if it's class has already been loaded.
 
 
+
+#### How to wrap the Runnable param?
+
+Note the ThreadPoolExecutor is a bootstap class. We must inject the wrap class, such as com.lbl.RunnableWrapper into bootstrap classloader.Then you should write a skywalking plugin to enhance com.lbl.RunnableWrapper. There is already a RunnableWrapper, org.apache.skywalking.apm.toolkit.trace.RunnableWrapper, but we can not use. why?
+
+This RunnableWrapper has a plugin. But the condition is checking if there is @TraceCrossThread. Then you should also inject TraceCrossThread into bootstrap classloader. Even if you do like this, you still fail. Byte buddy in skywalking will use net.bytebuddy.pool.TypePool.Default.WithLazyResolution.LazyTypeDescription to find the annotations of a class. The LazyTypeDescription finds annotations by using a URLClassLoader with no urls if the classloader is null(bootstrap classloader). So you should write your own wrapper class, and simplely use a name match condition.
 
 #### How to use
 
@@ -20,5 +26,9 @@ run
 
 you will get the agent.
 
-In jvm options, you should add this agent AFTER the skywalking java agent.
+In jvm options, you should add this agent after the skywalking java agent. 
+
+Why after? I have used net.bytebuddy.dynamic.loading.ClassInjector#inject method to inject RunnableWrap. The inject method also load the class. Then you can not enhance if you put the agent before. But if you use java.lang.instrument.Instrumentation#appendToBootstrapClassLoaderSearch, I think the order is not important.
+
+
 

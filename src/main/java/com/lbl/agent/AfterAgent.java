@@ -1,6 +1,7 @@
 package com.lbl.agent;
 
 import com.lbl.advice.MyAdvice;
+import com.lbl.advice.MyRunnableWrapper;
 import com.lbl.listener.TransformListener;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy;
@@ -9,7 +10,6 @@ import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.ClassFileLocator;
 import net.bytebuddy.dynamic.loading.ClassInjector;
 import net.bytebuddy.matcher.ElementMatchers;
-import org.apache.skywalking.apm.toolkit.trace.RunnableWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,8 +33,8 @@ public class AfterAgent {
                 .toFile();
         Map<TypeDescription, byte[]> bootstrapClassMap = new HashMap<>();
 
-        TypeDescription type = new TypeDescription.ForLoadedType(RunnableWrapper.class);
-        byte[] bytes = ClassFileLocator.ForClassLoader.read(RunnableWrapper.class);
+        TypeDescription type = new TypeDescription.ForLoadedType(MyRunnableWrapper.class);
+        byte[] bytes = ClassFileLocator.ForClassLoader.read(MyRunnableWrapper.class);
         bootstrapClassMap.put(type, bytes);
         ClassInjector.UsingInstrumentation.of(temp, ClassInjector.UsingInstrumentation.Target.BOOTSTRAP, inst)
                 .inject(bootstrapClassMap);

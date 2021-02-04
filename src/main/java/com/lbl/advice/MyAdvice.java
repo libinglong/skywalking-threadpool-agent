@@ -1,7 +1,6 @@
 package com.lbl.advice;
 
 import net.bytebuddy.asm.Advice;
-import org.apache.skywalking.apm.toolkit.trace.RunnableWrapper;
 
 /**
  * @author binglongli217932
@@ -12,7 +11,7 @@ public class MyAdvice {
 
     @Advice.OnMethodEnter
     static void enter(@Advice.Argument(value = 0, readOnly = false) Runnable runnable){
-        runnable = RunnableWrapper.of(runnable);
+        runnable = MyRunnableWrapper.of(runnable);
     }
 
 }
