@@ -22,7 +22,7 @@ to wrap the Runnable param. So let's write another agent to do this.
 
 Note the ThreadPoolExecutor is a bootstrap class. We must inject the wrap class, such as your.own.RunnableWrapper into 
 bootstrap classloader.Then you should write a skywalking plugin to enhance your.own.RunnableWrapper. There is already a 
-RunnableWrapper, org.apache.skywalking.apm.toolkit.trace.RunnableWrapper, but we can not use. why?
+RunnableWrapper, org.apache.skywalking.apm.toolkit.trace.RunnableWrapper, but it's hard to use it.
 
 This RunnableWrapper has a plugin whose active condition is checking if there is @TraceCrossThread. Byte buddy in 
 skywalking will use net.bytebuddy.pool.TypePool.Default.WithLazyResolution.LazyTypeDescription to find the annotations 
