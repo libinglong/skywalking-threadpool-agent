@@ -1,12 +1,12 @@
 # skywalking-threadpool-agent
 
-This project is designed to make it possible to propagate skywalking trace without changing user's code when using threadpool.
+This project is designed to make it possible to propagate skywalking context without changing user's code when using threadpool.
 
 If the project helps you, please star it!
 
 #### How to propagate
 
-To propagate trace between threads, we may want to enhance Runnable first, but it's not good since Runnable is not only 
+To propagate context between threads, we may want to enhance Runnable first, but it's not good since Runnable is not only 
 used in threads.So applying advice of ThreadPoolExecutor#execute to wrap the Runnable param is a good choice.However, it's hard to do 
 it.The java agent of skywalking usually add a field and implement interface EnhancedInstance when it enhances instances.
 It fails when the class of the enhanced instance has been loaded because most JVMs do not allow changes in the class 
