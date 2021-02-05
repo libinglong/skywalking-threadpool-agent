@@ -1,4 +1,4 @@
-package com.lbl;
+package net.bird;
 
 import org.junit.Test;
 

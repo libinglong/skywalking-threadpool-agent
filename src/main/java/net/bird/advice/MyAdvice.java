@@ -1,4 +1,4 @@
-package com.lbl.advice;
+package net.bird.advice;
 
 import net.bytebuddy.asm.Advice;
 

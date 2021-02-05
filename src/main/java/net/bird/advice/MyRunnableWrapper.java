@@ -1,4 +1,4 @@
-package com.lbl.advice;
+package net.bird.advice;
 
 /**
  * @author binglongli217932
