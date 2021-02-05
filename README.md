@@ -36,7 +36,7 @@ In this project, I write my own wrapper class, and simply add a plugin with a na
 
 run 
 
-> mvn clean package,
+> mvn clean package
 
 you will get the agent.
 
