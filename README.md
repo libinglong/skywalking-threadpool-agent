@@ -6,15 +6,15 @@ If the project helps you, please star it!
 
 #### How to propagate
 
-To propagate trace between thread, we may want to enhance Runnable first. But it's not good since Runnable is not only 
-used in thread.So advicing ThreadPoolExecutor#execute to wrap the Runnable param is a good choice.But it's hard to do 
-it.The java agent of skywalking usually add a field and implement interface EnhancedInstance when it enhance instances.
+To propagate trace between threads, we may want to enhance Runnable first, but it's not good since Runnable is not only 
+used in threads.So applying advice of ThreadPoolExecutor#execute to wrap the Runnable param is a good choice.However, it's hard to do 
+it.The java agent of skywalking usually add a field and implement interface EnhancedInstance when it enhances instances.
 It fails when the class of the enhanced instance has been loaded because most JVMs do not allow changes in the class 
 file format for classes that have been loaded previously.ThreadPoolExecutor is a special class in the bootstrap class 
 path and may be loaded at any code. Fortunately we don't need to change the layout of ThreadPoolExecutor if we just want 
 to wrap the Runnable param. So let's write another agent to do this.
 
-> You can not enhance the intance if it's class has already been loaded.
+> You can not enhance the instance if the class of it has already been loaded.
 
 
 
