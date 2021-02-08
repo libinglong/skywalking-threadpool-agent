@@ -29,7 +29,7 @@ import static org.apache.skywalking.apm.dependencies.net.bytebuddy.matcher.Eleme
 
 
 public class MyRunnableWrapperInstrumentation extends ClassEnhancePluginDefine {
-    private static final String CLASS_NAME = "com.lbl.advice.MyRunnableWrapper";
+    private static final String CLASS_NAME = "net.bird.advice.MyRunnableWrapper";
     private static final String RUNNABLE_CLASS_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperConstructorInterceptor";
     private static final String RUNNABLE_RUN_METHOD = "run";
     private static final String RUNNABLE_RUN_METHOD_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperMethodInterceptor";
