@@ -34,16 +34,17 @@ In this project, I write my own wrapper class, and simply add a plugin with a na
 
 #### How to use
 
-run 
+Download the assets from Release.
+* [jdk-threadpool-plugin.jar](https://github.com/libinglong/skywalking-threadpool-agent/releases/download/v1.0.0/jdk-threadpool-plugin.jar)
 
-> mvn clean package
+  Move this plugin to the "plugins" directory of SkyWalking agent.
 
-you will get the agent.
+* [skywalking-tool-agent.jar](https://github.com/libinglong/skywalking-threadpool-agent/releases/download/v1.0.0/skywalking-tool-agent.jar)
 
-In jvm options, you should add this agent after the SkyWalking java agent since the wrapper class should be enhanced 
-by SkyWalking java agent. For example,
+  In jvm options, you should add this agent after the SkyWalking java agent since the wrapper class should be enhanced 
+  by SkyWalking java agent. For example,
 
-> java -javaagent:/path/to/skywalking-agent -javaagent:/path/to/tool-agent ...
+  > java -javaagent:/path/to/skywalking-agent -javaagent:/path/to/tool-agent ...
 
 
 
