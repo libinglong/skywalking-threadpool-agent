@@ -41,7 +41,9 @@ run
 you will get the agent.
 
 In jvm options, you should add this agent after the SkyWalking java agent since the wrapper class should be enhanced 
-by SkyWalking java agent
+by SkyWalking java agent. For example,
+
+> java -javaagent:/path/to/skywalking-agent -javaagent:/path/to/tool-agent ...
 
 
 
