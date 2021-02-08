@@ -16,6 +16,7 @@
 
 package net.bird.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
@@ -26,6 +27,7 @@ import net.bytebuddy.utility.JavaModule;
  * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
  * @since 2021/2/1
  */
+@Slf4j
 public class TransformListener implements AgentBuilder.Listener {
 
 
@@ -40,22 +42,22 @@ public class TransformListener implements AgentBuilder.Listener {
                                  final JavaModule module,
                                  final boolean loaded,
                                  final DynamicType dynamicType) {
-        System.out.println("On Transformation class " + typeDescription.getName() + " loaded:" + loaded);
+        log.debug("On transformation, type={}, loaded={}", typeDescription.getName(), loaded);
     }
 
     @Override
     public void onIgnored(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
+        log.debug("On ignored, type={}, loaded={}", typeDescription.getName(), loaded);
     }
 
     @Override
     public void onError(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded, Throwable throwable) {
-        throwable.printStackTrace();
+        log.error("On error, type={}, loaded={}", typeName, loaded, throwable);
     }
 
     @Override
     public void onComplete(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
+        // do nothing
     }
 
 }
