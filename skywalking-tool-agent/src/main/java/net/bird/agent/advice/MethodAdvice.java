@@ -16,24 +16,18 @@
 
 package net.bird.agent.advice;
 
+import net.bytebuddy.asm.Advice;
+
 /**
  * @author binglongli217932
  * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
- * @since 2021/2/4
+ * @since 2021/1/23
  */
-public class MyRunnableWrapper implements Runnable {
+public class MethodAdvice {
 
-    final Runnable runnable;
-
-    private MyRunnableWrapper(Runnable runnable) {
-        this.runnable = runnable;
+    @Advice.OnMethodEnter
+    static void enter(@Advice.Argument(value = 0, readOnly = false) Runnable runnable){
+        runnable = RunnableWrapper.of(runnable);
     }
 
-    public static MyRunnableWrapper of(Runnable r) {
-        return new MyRunnableWrapper(r);
-    }
-
-    public void run() {
-        this.runnable.run();
-    }
 }

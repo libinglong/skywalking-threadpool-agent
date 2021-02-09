@@ -16,8 +16,8 @@
 
 package net.bird.agent;
 
-import net.bird.agent.advice.MyAdvice;
-import net.bird.agent.advice.MyRunnableWrapper;
+import net.bird.agent.advice.MethodAdvice;
+import net.bird.agent.advice.RunnableWrapper;
 import net.bird.agent.listener.TransformListener;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy;
@@ -49,8 +49,8 @@ public class AfterAgent {
                 .toFile();
         Map<TypeDescription, byte[]> bootstrapClassMap = new HashMap<>();
 
-        TypeDescription type = new TypeDescription.ForLoadedType(MyRunnableWrapper.class);
-        byte[] bytes = ClassFileLocator.ForClassLoader.read(MyRunnableWrapper.class);
+        TypeDescription type = new TypeDescription.ForLoadedType(RunnableWrapper.class);
+        byte[] bytes = ClassFileLocator.ForClassLoader.read(RunnableWrapper.class);
         bootstrapClassMap.put(type, bytes);
         ClassInjector.UsingInstrumentation.of(temp, ClassInjector.UsingInstrumentation.Target.BOOTSTRAP, inst)
                 .inject(bootstrapClassMap);
@@ -58,7 +58,7 @@ public class AfterAgent {
                 .ignore(ElementMatchers.nameStartsWith("net.bytebuddy."))
                 .type(target -> target.getName().equals("java.util.concurrent.ThreadPoolExecutor"))
                 .transform((builder, typeDescription, classLoader, module) -> builder
-                        .visit(Advice.to(MyAdvice.class).on(target -> target.getName().equals("execute"))))
+                        .visit(Advice.to(MethodAdvice.class).on(target -> target.getName().equals("execute"))))
                 .with(RedefinitionStrategy.RETRANSFORMATION)
                 .with(RedefinitionStrategy.Listener.ErrorEscalating.FAIL_FAST)
                 .with(new TransformListener())
