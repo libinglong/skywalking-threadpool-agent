@@ -20,7 +20,7 @@ import org.apache.skywalking.apm.agent.core.context.ContextManager;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.EnhancedInstance;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstanceConstructorInterceptor;
 
-public class MyRunnableWrapperConstructorInterceptor implements InstanceConstructorInterceptor {
+public class RunnableWrapperConstructorInterceptor implements InstanceConstructorInterceptor {
 
     @Override
     public void onConstruct(final EnhancedInstance objInst, final Object[] allArguments) {

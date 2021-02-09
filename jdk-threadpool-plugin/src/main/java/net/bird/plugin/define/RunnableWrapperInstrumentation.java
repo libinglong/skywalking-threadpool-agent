@@ -28,11 +28,11 @@ import org.apache.skywalking.apm.dependencies.net.bytebuddy.matcher.ElementMatch
 import static org.apache.skywalking.apm.dependencies.net.bytebuddy.matcher.ElementMatchers.*;
 
 
-public class MyRunnableWrapperInstrumentation extends ClassEnhancePluginDefine {
+public class RunnableWrapperInstrumentation extends ClassEnhancePluginDefine {
     private static final String CLASS_NAME = "net.bird.agent.advice.RunnableWrapper";
-    private static final String RUNNABLE_CLASS_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperConstructorInterceptor";
+    private static final String RUNNABLE_CLASS_INTERCEPTOR = "net.bird.plugin.RunnableWrapperConstructorInterceptor";
     private static final String RUNNABLE_RUN_METHOD = "run";
-    private static final String RUNNABLE_RUN_METHOD_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperMethodInterceptor";
+    private static final String RUNNABLE_RUN_METHOD_INTERCEPTOR = "net.bird.plugin.RunnableWrapperMethodInterceptor";
 
     @Override
     protected ClassMatch enhanceClass() {
