@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package net.bird.advice;
+package net.bird.agent.advice;
 
 /**
  * @author binglongli217932

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.apache.skywalking.apm.plugin.jdk.threading.define;
+package net.bird.plugin.define;
 
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.ConstructorInterceptPoint;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.InstanceMethodsInterceptPoint;
@@ -29,7 +29,7 @@ import static org.apache.skywalking.apm.dependencies.net.bytebuddy.matcher.Eleme
 
 
 public class MyRunnableWrapperInstrumentation extends ClassEnhancePluginDefine {
-    private static final String CLASS_NAME = "net.bird.advice.MyRunnableWrapper";
+    private static final String CLASS_NAME = "net.bird.agent.advice.MyRunnableWrapper";
     private static final String RUNNABLE_CLASS_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperConstructorInterceptor";
     private static final String RUNNABLE_RUN_METHOD = "run";
     private static final String RUNNABLE_RUN_METHOD_INTERCEPTOR = "org.apache.skywalking.apm.plugin.jdk.threading.MyRunnableWrapperMethodInterceptor";

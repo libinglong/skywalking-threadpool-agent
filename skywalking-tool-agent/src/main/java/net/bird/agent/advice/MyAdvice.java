@@ -14,37 +14,20 @@
  *    limitations under the License.
  */
 
-package net.bird;
+package net.bird.agent.advice;
 
-import org.junit.Test;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import net.bytebuddy.asm.Advice;
 
 /**
  * @author binglongli217932
  * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
- * @since 2021/1/4
+ * @since 2021/1/23
  */
+public class MyAdvice {
 
-public class AgentTest {
-
-    @Test
-    public void fun() {
-
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        try {
-            executorService.submit(new Callable<Object>() {
-                @Override
-                public Object call() throws Exception {
-                    System.out.println("hh");
-                    return "result";
-                }
-            });
-        } catch (Throwable e){
-            e.printStackTrace();
-        }
-
+    @Advice.OnMethodEnter
+    static void enter(@Advice.Argument(value = 0, readOnly = false) Runnable runnable){
+        runnable = MyRunnableWrapper.of(runnable);
     }
+
 }

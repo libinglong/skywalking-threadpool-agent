@@ -14,20 +14,19 @@
  *    limitations under the License.
  */
 
-package net.bird.advice;
+package net.bird.plugin;
 
-import net.bytebuddy.asm.Advice;
+import org.apache.skywalking.apm.agent.core.context.ContextManager;
+import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.EnhancedInstance;
+import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstanceConstructorInterceptor;
 
-/**
- * @author binglongli217932
- * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
- * @since 2021/1/23
- */
-public class MyAdvice {
+public class MyRunnableWrapperConstructorInterceptor implements InstanceConstructorInterceptor {
 
-    @Advice.OnMethodEnter
-    static void enter(@Advice.Argument(value = 0, readOnly = false) Runnable runnable){
-        runnable = MyRunnableWrapper.of(runnable);
+    @Override
+    public void onConstruct(final EnhancedInstance objInst, final Object[] allArguments) {
+        if (ContextManager.isActive()) {
+            objInst.setSkyWalkingDynamicField(ContextManager.capture());
+        }
     }
 
 }

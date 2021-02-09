@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.apache.skywalking.apm.plugin.jdk.threading;
+package net.bird.plugin;
 
 import java.lang.reflect.Method;
 

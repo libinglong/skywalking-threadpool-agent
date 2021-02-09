@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package net.bird.listener;
+package net.bird.agent.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.agent.builder.AgentBuilder;

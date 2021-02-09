@@ -16,9 +16,9 @@
 
 package net.bird.agent;
 
-import net.bird.advice.MyAdvice;
-import net.bird.advice.MyRunnableWrapper;
-import net.bird.listener.TransformListener;
+import net.bird.agent.advice.MyAdvice;
+import net.bird.agent.advice.MyRunnableWrapper;
+import net.bird.agent.listener.TransformListener;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy;
 import net.bytebuddy.asm.Advice;
