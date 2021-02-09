@@ -38,6 +38,8 @@ Download the assets from Release.
 * [jdk-threadpool-plugin.jar](https://github.com/libinglong/skywalking-threadpool-agent/releases/download/v1.0.0/jdk-threadpool-plugin.jar)
 
   Move this plugin to the "plugins" directory of SkyWalking agent.
+  ![plugin](docs/images/plugin.png)
+  ![plugin](docs/images/sky-plugins.png)
 
 * [skywalking-tool-agent.jar](https://github.com/libinglong/skywalking-threadpool-agent/releases/download/v1.0.0/skywalking-tool-agent.jar)
 
