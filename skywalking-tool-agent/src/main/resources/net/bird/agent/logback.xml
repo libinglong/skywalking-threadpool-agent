@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true"
+               xmlns="http://ch.qos.logback/xml/ns/logback"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/libinglong/logback-XSD/master/src/main/xsd/logback.xsd">
+
+    <property name="defaultPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%t] %C.%M\\(%C{0}.java:%L\\) %msg %n"/>
+
+    <appender name="stdout" class="net.bird.agent.shade.ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.bird.agent.shade.ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>UTF-8</charset>
+            <layout class="net.bird.agent.shade.ch.qos.logback.classic.PatternLayout">
+                <pattern>${defaultPattern}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>

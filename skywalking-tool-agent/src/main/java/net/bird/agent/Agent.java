@@ -40,7 +40,7 @@ import java.util.Map;
  * <a href="mailto:libinglong9@gmail.com">libinglong:libinglong9@gmail.com</a>
  * @since 2021/1/4
  */
-public class AfterAgent {
+public class Agent {
 
 
     public static void premain(String agentArgs, Instrumentation inst) throws IOException, UnmodifiableClassException {
